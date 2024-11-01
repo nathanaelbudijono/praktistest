@@ -1,40 +1,21 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# PTS Test - Front-End and Data Structure
 
-## Getting Started
+## Project Setup
 
-First, run the development server:
+To get started with the project, begin by cloning the repository to your local machine. After cloning, navigate to the project directory and run npm install to install all the necessary dependencies. Before launching the application, ensure that you fill out the .env file with the required environment variables. The database can be found in the public directory as database.json, where you can add or remove data, provided it adheres to the specified rules.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Structure
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This project utilizes the Next.js page router and is organized into seven main folders, along with a middleware directory. Below is an overview of each folder's purpose:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- components: Contains modules for the UI components, including page component or reusable components.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- constants: Stores variable paths.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- hooks: Includes custom hooks that are used throughout the application to manage various states and logic.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- lib: Contains reusable helper functions that assist with common tasks across the app and Zustand State management.
 
-## Learn More
+- pages: The default Next.js folder that defines the application's routing structure, with each file corresponding to a route, contains API Route to simulate database fetching.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- styles: The default Next.js folder for storing global CSS files and stylesheets.
