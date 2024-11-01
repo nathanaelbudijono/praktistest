@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/chart";
 import useBarWidth from "@/hooks/useBarWidth";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { rpcProps } from "@/lib/zustand/summary-slice";
+import { rpcProps } from "@/types/database-types";
+
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 const RevenuePerCategoryChart = ({ rpc }: { rpc: rpcProps[] }) => {

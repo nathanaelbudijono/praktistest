@@ -9,31 +9,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
 import { navItemProps } from "@/types/types";
 
+import { BASE_URL } from "@/constant/env";
 import {
   CircleUser,
-  FileUp,
-  FolderPlus,
-  FolderUp,
   LayoutDashboard,
   LogOut,
   Menu,
   PackageOpen,
-  Plus,
-  SendToBack,
   UserPen,
-  Users,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Typography from "../ui/typography";
-import { BASE_URL } from "@/constant/env";
+import { useRouter } from "next/router";
 
 const AdminHeader = ({ title }: { title: string }) => {
   const path = usePathname();
+  const router = useRouter();
 
   return (
     <header className="flex h-14 items-center justify-between md:justify-between gap-4 bg-muted px-4 lg:h-[60px] lg:px-6">
@@ -85,7 +79,7 @@ const AdminHeader = ({ title }: { title: string }) => {
             <UserPen strokeWidth={1} size={16} className="mr-1" />
             Edit Profile
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push(`${BASE_URL}`)}>
             <LogOut strokeWidth={1} size={16} className="mr-1" /> Logout
           </DropdownMenuItem>
         </DropdownMenuContent>

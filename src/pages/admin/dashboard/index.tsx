@@ -5,10 +5,12 @@ import AdminLayout from "@/components/ui/layout/admin-layout";
 import Content from "@/components/ui/layout/content";
 import ContentLayout from "@/components/ui/layout/content-layout";
 import ContentTitle from "@/components/ui/layout/content-title";
+import Seo from "@/components/ui/seo";
 
 const DashboardPage = () => {
   return (
     <AdminLayout>
+      <Seo templateTitle="Dashboard" />
       <Sidebar />
       <div className="flex flex-col">
         <AdminHeader title="Dashboard" />

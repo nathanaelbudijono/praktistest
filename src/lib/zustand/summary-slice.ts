@@ -1,6 +1,9 @@
 import {
+  bestSpendersProps,
   buyersProps,
+  buyerTransactionProps,
   itemProps,
+  rpcProps,
   transactionProps,
 } from "@/types/database-types";
 import { StateCreator } from "zustand";
@@ -12,6 +15,7 @@ export interface summarySlicesProps {
   revenue: number;
   rpc: rpcProps[];
   bestSpenders: bestSpendersProps[];
+  buyerTransaction: buyerTransactionProps[];
 }
 
 export interface summarySlicesFunctionProps {
@@ -34,16 +38,6 @@ export interface summarySlicesFunctionProps {
     transaction: transactionProps[]
   ): number;
 }
-export interface rpcProps {
-  category: string;
-  revenue: number;
-}
-
-export interface bestSpendersProps {
-  name: string;
-  type: string;
-  spent: number;
-}
 
 export const summarySlices: StateCreator<
   summarySlicesProps & summarySlicesFunctionProps
@@ -54,6 +48,7 @@ export const summarySlices: StateCreator<
   revenue: 0,
   rpc: [],
   bestSpenders: [],
+  buyerTransaction: [],
   calculateSummary: (
     items: itemProps[],
     buyers: buyersProps[],
@@ -66,7 +61,7 @@ export const summarySlices: StateCreator<
       const revenueByCategory: Record<string, number> = {};
       const itemSalesCount: Record<string, number> = {};
       const spenderTotal: Record<string, bestSpendersProps> = {};
-
+      const buyerTransaction: buyerTransactionProps[] = [];
       transactions.forEach((transaction) => {
         //data
         const itemData = items.find((item) => item.name === transaction.item);
@@ -88,6 +83,7 @@ export const summarySlices: StateCreator<
           price = regularPrice.price;
         }
 
+        // calculate total revenue
         const transactionRevenue = price * transaction.qty;
 
         totalTransaction += transactionRevenue;
@@ -110,7 +106,17 @@ export const summarySlices: StateCreator<
           };
         }
         spenderTotal[buyer.name].spent += transactionRevenue;
+
+        // new array transaction and type
+        buyerTransaction.push({
+          item: transaction.item,
+          qty: transaction.qty,
+          buyer: transaction.buyer,
+          type: buyer.type,
+          totalPrice: price * transaction.qty,
+        });
       });
+
       //get best selling item
       const bestSellingItem = Object.entries(itemSalesCount).reduce(
         (max, entry) =>
@@ -144,6 +150,7 @@ export const summarySlices: StateCreator<
         revenue: totalTransaction,
         rpc,
         bestSpenders,
+        buyerTransaction,
       });
     } catch (err) {
       console.log(err);

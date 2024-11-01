@@ -2,7 +2,7 @@
 
 import { BASE_URL } from "@/constant/env";
 import { navItemProps } from "@/types/types";
-import { LayoutDashboard, PackageOpen, SendToBack, Users } from "lucide-react";
+import { LayoutDashboard, PackageOpen } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,7 +11,7 @@ const Sidebar = () => {
 
   return (
     <main className="hidden bg-muted md:block">
-      <div className="flex h-full max-h-screen flex-col gap-2">
+      <div className="flex h-full max-h-screen flex-col gap-2 bg-muted">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6 mb-5">
           <h1 className="font-semibold text-lg text-green-800">
             The Islanders

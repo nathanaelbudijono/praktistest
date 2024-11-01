@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import Typography from "@/components/ui/typography";
 import { capitalizeFirstLetter, formatToIDR } from "@/lib/helper";
-import { bestSpendersProps } from "@/lib/zustand/summary-slice";
-import { transactionProps } from "@/types/database-types";
+
+import { bestSpendersProps, transactionProps } from "@/types/database-types";
 import { User } from "lucide-react";
 
 const TopSpenderCard = ({

@@ -61,7 +61,7 @@
           "price": 20000
         },
         {
-          "priceFor": "VIP",
+          "priceFor": "wholesale",
           "price": 15000
         }
       ]
@@ -90,7 +90,7 @@
     },
     {
       "name": "Fadil",
-      "type": "regular"
+      "type": "VIP"
     },
     {
       "name": "Gina",

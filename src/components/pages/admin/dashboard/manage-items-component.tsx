@@ -7,7 +7,7 @@ import Typography from "@/components/ui/typography";
 import { handleFetchAllItems, handleFetchCategory } from "@/lib/fetcher";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { itemProps } from "@/types/database-types";
-import Image from "next/image";
+import ManageItemSkeleton from "@/components/modules/skeleton/manage-item-skeleton";
 
 const ManageItemsComponent = () => {
   const [category, setCategory] = React.useState<string[] | null>(null);
@@ -18,6 +18,7 @@ const ManageItemsComponent = () => {
 
   const [search, setSearch] = React.useState<string>("");
   const [categorySelected, setCategorySelected] = React.useState<string>("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   // Fetch category
   const getCategory = async (): Promise<void> => {
@@ -69,60 +70,76 @@ const ManageItemsComponent = () => {
     }
   }, [search, allItems]);
 
+  const fetchItems = async (): Promise<void> => {
+    setIsLoading(true);
+    await getCategory();
+    await getAllItems();
+    setIsLoading(false);
+  };
+
   React.useEffect(() => {
-    getCategory();
-    getAllItems();
+    fetchItems();
   }, []);
 
   React.useEffect(() => {
     performSearch();
   }, [search, performSearch]);
 
+  if (isLoading) {
+    return <ManageItemSkeleton />;
+  }
+
   return (
     <main>
-      <Typography variant="h4">Explore Categories</Typography>
-      <section className="mt-5">
-        <div className="space-x-3 flex flex-grow gap-2">
-          {category &&
-            category?.map((item, index) => {
-              return (
-                <Button
-                  className="w-40"
-                  key={index}
-                  onClick={() => handleFilterCategory(item)}
-                  variant={categorySelected !== item ? "default" : "outline"}
-                >
-                  <Typography variant="p" color="white">
-                    {capitalizeFirstLetter(item)}
-                  </Typography>
-                </Button>
-              );
-            })}
-        </div>
-      </section>
-      <section className="mt-5">
-        {allItems && (
-          <Input
-            placeholder="Search items..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-52 mb-5"
-          />
-        )}
-
-        {filteredItems?.length !== 0 && (
-          <div className="grid grid-cols-1 gap-3 tablet:grid-cols-2  lg:grid=cols-3 xl:grid-cols-4 ">
-            {filteredItems?.map((item, index) => {
-              return <ItemsCard key={index} item={item} />;
-            })}
+      <Typography variant="p" color="muted">
+        Manage and see details of all items in the store right here.
+      </Typography>
+      <section className="md:h-[95vh] overflow-auto mt-5">
+        <section>
+          <div className="space-x-3 flex flex-grow gap-2">
+            {allItems &&
+              category &&
+              category?.map((item, index) => {
+                return (
+                  <Button
+                    className="w-40"
+                    key={index}
+                    onClick={() => handleFilterCategory(item)}
+                    variant={categorySelected !== item ? "default" : "outline"}
+                  >
+                    <Typography variant="p" color="white">
+                      {capitalizeFirstLetter(item)}
+                    </Typography>
+                  </Button>
+                );
+              })}
           </div>
+        </section>
+        <section className="mt-5">
+          {allItems && (
+            <Input
+              placeholder="Search items..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-52 mb-5"
+            />
+          )}
+
+          {filteredItems?.length !== 0 && (
+            <div className="grid grid-cols-1 gap-3 tablet:grid-cols-2 xl:grid-cols-3 ">
+              {filteredItems?.map((item, index) => {
+                return <ItemsCard key={index} item={item} />;
+              })}
+            </div>
+          )}
+        </section>
+
+        {!allItems && (
+          <section className="mt-5 text-center">
+            <Typography variant="h4">No records</Typography>
+          </section>
         )}
       </section>
-      {!allItems && (
-        <section className="mt-5 text-center">
-          <Typography variant="h4">No records are found</Typography>
-        </section>
-      )}
     </main>
   );
 };

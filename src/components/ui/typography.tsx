@@ -39,9 +39,9 @@ type TypographyComponent = <T extends React.ElementType = "p">(
   props: TypographyProps<T>
 ) => React.ReactElement | null;
 
-// @ts-ignore
+// @ts-expect-error - forwardRef type is not generic
 const Typography: TypographyComponent = React.forwardRef(
-  // @ts-ignore
+  // @ts-expect-error - rest type is not generic
   <T extends React.ElementType = "p">(
     {
       as,
@@ -60,7 +60,7 @@ const Typography: TypographyComponent = React.forwardRef(
         className={cn(
           [
             variant === "h1" && [
-              "scroll-m-20 text-4xl font-semibold tracking-wide lg:text-5xl max-md:text-3xl max-sm:text-2xl",
+              "scroll-m-20 text-4xl font-semibold tracking-wide lg:text-6xl max-md:text-5xl max-sm:text-4xl",
             ],
             variant === "h2" && [
               "scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 max-md:text-2xl max-sm:text-xl",

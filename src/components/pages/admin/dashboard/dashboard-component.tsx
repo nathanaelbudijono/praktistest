@@ -6,9 +6,17 @@ import {
   BestSellingItemCardNotFound,
 } from "@/components/modules/card/best-selling-card";
 import RevenueCard from "@/components/modules/card/revenue-card";
+import TopSpenderCard from "@/components/modules/card/top-spender-card";
 import RevenuePerCategoryChart from "@/components/modules/chart/revenue-per-category-chart";
 import { transactionColumns } from "@/components/modules/table/transaction-column";
 import TransactionDataTable from "@/components/modules/table/transaction-table";
+import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Typography from "@/components/ui/typography";
 import {
   handleFetchAllItems,
@@ -22,21 +30,12 @@ import {
   transactionProps,
 } from "@/types/database-types";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
-import {
   ArrowLeftRight,
   Coins,
   RefreshCcw,
   ShoppingBasket,
-  User,
 } from "lucide-react";
-import TopSpenderCard from "@/components/modules/card/top-spender-card";
-import { Button } from "@/components/ui/button";
+import DashboardSkeleton from "@/components/modules/skeleton/dashboard-skeleton";
 
 const DashboardComponent = () => {
   const {
@@ -44,6 +43,7 @@ const DashboardComponent = () => {
     transactionCount,
     revenue,
     rpc,
+    buyerTransaction,
     bestSellingCategory,
     bestSellingItem,
     bestSpenders,
@@ -108,11 +108,7 @@ const DashboardComponent = () => {
   }, [allItems, buyers, totalTransaction]);
 
   if (isLoading) {
-    return (
-      <Typography variant="p" color="muted">
-        Loading items..
-      </Typography>
-    );
+    return <DashboardSkeleton />;
   }
   if (!allItems || !buyers || !totalTransaction) {
     return (
@@ -155,8 +151,7 @@ const DashboardComponent = () => {
         </TooltipProvider>
       </section>
       {allItems && buyers && totalTransaction && (
-        <>
-          {" "}
+        <section className="md:h-[95vh] overflow-auto">
           <section className="w-full flex gap-7 max-dashboard:flex-col">
             <section className="w-1/2 max-dashboard:w-full">
               <div className="flex gap-2 max-md:flex-col">
@@ -187,7 +182,7 @@ const DashboardComponent = () => {
               </Typography>
               <TransactionDataTable
                 columns={transactionColumns}
-                data={totalTransaction}
+                data={buyerTransaction}
               />
             </section>
             <section className="w-1/2 max-dashboard:w-full">
@@ -212,7 +207,7 @@ const DashboardComponent = () => {
               </div>
             </section>
           </section>
-        </>
+        </section>
       )}
     </main>
   );
