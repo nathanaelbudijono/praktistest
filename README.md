@@ -2,7 +2,7 @@
 
 ## Project Setup
 
-To get started with the project, begin by cloning the repository to your local machine. After cloning, navigate to the project directory and run npm install to install all the necessary dependencies. Before launching the application, ensure that you fill out the .env file with the required environment variables. The database can be found in the public directory as database.json, where you can add or remove data, provided it adheres to the specified rules.
+To get started with the project, begin by cloning the repository to your local machine. After cloning, navigate to the project directory and run npm install or npm install --legacy-peer-deps to install all the necessary dependencies. Before launching the application, ensure that you fill out the .env file with the required environment variables. The database can be found in the public directory as database.json, where you can add or remove data, provided it adheres to the specified rules.
 
 ## Project Structure
 
