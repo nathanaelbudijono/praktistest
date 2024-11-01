@@ -30,6 +30,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Typography from "../ui/typography";
+import { BASE_URL } from "@/constant/env";
 
 const AdminHeader = ({ title }: { title: string }) => {
   const path = usePathname();
@@ -42,51 +43,11 @@ const AdminHeader = ({ title }: { title: string }) => {
             <Menu className="h-5 w-5" />
           </SheetTrigger>
           <SheetContent side="left" className="flex flex-col">
-            <Image
-              src="/assets/logo.png"
-              alt="WooBlazz Meet"
-              width={96}
-              height={30}
-              className="object-cover mb-5"
-              loading="lazy"
-            />
-
             <nav className="grid gap-3 text-lg font-medium">
               <div className="mb-5">
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    className={cn(
-                      "inline-flex gap-3 items-center justify-center shadow-sm whitespace-nowrap rounded-lg text-sm font-medium",
-                      "ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
-                      "disabled:pointer-events-none disabled:opacity-50",
-                      "h-12 px-4 py-2",
-                      "text-primary-foreground bg-gradient-to-r from-[#106DBD] to-[#3C45AB]",
-                      "mx-2 lg:mx-4"
-                    )}
-                  >
-                    <Plus strokeWidth={1} /> New
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="mx-2 lg:mx-4">
-                    <DropdownMenuLabel>Uploads</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <FolderPlus
-                        strokeWidth={1.25}
-                        size={16}
-                        className="mr-2"
-                      />
-                      New Folder
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <FolderUp strokeWidth={1.25} size={16} className="mr-2" />
-                      Upload Folder
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <FileUp strokeWidth={1.25} size={16} className="mr-2" />
-                      Upload File
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <h1 className="font-semibold text-lg text-green-800">
+                  The Islanders
+                </h1>
               </div>
               {navItems.map((item, index) => (
                 <Link
@@ -137,24 +98,14 @@ export default AdminHeader;
 
 const navItems: navItemProps[] = [
   {
-    href: "/",
+    href: `${BASE_URL}/admin/dashboard`,
     icon: <LayoutDashboard strokeWidth={1} className="icon" />,
     label: "Dashboard",
   },
-  {
-    href: "/drive",
-    icon: <SendToBack strokeWidth={1} className="icon" />,
-    label: "Order line",
-  },
 
   {
-    href: "/shared",
+    href: `${BASE_URL}/admin/dashboard/items`,
     icon: <PackageOpen strokeWidth={1} className="icon" />,
     label: "Manage Items",
-  },
-  {
-    href: "/trash",
-    icon: <Users strokeWidth={1} className="icon" />,
-    label: "Customers",
   },
 ];

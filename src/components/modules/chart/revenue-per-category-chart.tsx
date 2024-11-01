@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -14,17 +13,10 @@ import {
 } from "@/components/ui/chart";
 import useBarWidth from "@/hooks/useBarWidth";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { summaryProps } from "@/types/database-types";
-import { TrendingUp } from "lucide-react";
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  XAxis,
-} from "recharts";
+import { rpcProps } from "@/lib/zustand/summary-slice";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-const RevenuePerCategoryChart = ({ summary }: { summary: summaryProps }) => {
+const RevenuePerCategoryChart = ({ rpc }: { rpc: rpcProps[] }) => {
   const width = useBarWidth();
   const chartConfig = {
     revenue: {
@@ -41,12 +33,7 @@ const RevenuePerCategoryChart = ({ summary }: { summary: summaryProps }) => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full">
-          <BarChart
-            accessibilityLayer
-            data={summary.rpc}
-            width={width}
-            height={300}
-          >
+          <BarChart accessibilityLayer data={rpc} width={width} height={300}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="category"

@@ -82,7 +82,7 @@ const ManageItemsComponent = () => {
     <main>
       <Typography variant="h4">Explore Categories</Typography>
       <section className="mt-5">
-        <div className="space-x-3">
+        <div className="space-x-3 flex flex-grow gap-2">
           {category &&
             category?.map((item, index) => {
               return (
@@ -90,14 +90,8 @@ const ManageItemsComponent = () => {
                   className="w-40"
                   key={index}
                   onClick={() => handleFilterCategory(item)}
-                  variant={categorySelected !== item ? "default" : "secondary"}
+                  variant={categorySelected !== item ? "default" : "outline"}
                 >
-                  <Image
-                    src={`/assets/category/${item}.png`}
-                    width={30}
-                    height={30}
-                    alt="item"
-                  />
                   <Typography variant="p" color="white">
                     {capitalizeFirstLetter(item)}
                   </Typography>

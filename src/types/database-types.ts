@@ -19,23 +19,3 @@ export interface transactionProps {
   qty: number;
   buyer: string;
 }
-
-export interface summaryProps {
-  totalTransaction: number;
-  bestSellingItem: string;
-  bestSellingCategory: string;
-  revenue: number;
-  rpc: rpcProps[];
-  bestSpenders: bestSpendersProps[];
-}
-
-export interface rpcProps {
-  category: string;
-  revenue: number;
-}
-
-export interface bestSpendersProps {
-  naem: string;
-  type: string;
-  spent: number;
-}

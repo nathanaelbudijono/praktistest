@@ -59,7 +59,7 @@ const ItemsCard = ({ item }: { item: itemProps }) => {
                 {item.prices.map((price, index) => {
                   const isSpecialPrice = item.prices.some(
                     (item) =>
-                      item.priceFor === "vip" || item.priceFor === "wholesale"
+                      item.priceFor === "VIP" || item.priceFor === "wholesale"
                   );
                   return isSpecialPrice ? (
                     <div key={index} className="flex gap-1 items-center">

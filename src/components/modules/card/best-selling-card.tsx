@@ -1,15 +1,12 @@
 import Typography from "@/components/ui/typography";
-import {
-  calculateBestItemRevenue,
-  calculateBestItemSold,
-  capitalizeFirstLetter,
-  formatToIDR,
-} from "@/lib/helper";
+import { capitalizeFirstLetter, formatToIDR } from "@/lib/helper";
+import { useSummaryStore } from "@/lib/zustand/store";
 import {
   buyersProps,
   itemProps,
   transactionProps,
 } from "@/types/database-types";
+import { Trophy } from "lucide-react";
 import Image from "next/image";
 
 const BestSellingItemCard = ({
@@ -21,16 +18,20 @@ const BestSellingItemCard = ({
   totalTransaction: transactionProps[];
   buyers: buyersProps[];
 }) => {
-  const pricesLength: number = bestSellingItemData.prices.length;
-  const totalBestItemSold: number = calculateBestItemSold(
+  const { calculateBestItemSoldQuantity, calculateBestItemRevenue } =
+    useSummaryStore();
+
+  const bestItemSoldQuantity = calculateBestItemSoldQuantity(
     totalTransaction,
     bestSellingItemData
   );
-  const totalBestItemRevenue: number = calculateBestItemRevenue(
+
+  const totalBestItemRevenue = calculateBestItemRevenue(
     totalTransaction,
     bestSellingItemData,
     buyers
   );
+
   return (
     <div className="w-full border rounded-md px-6 shadow-sm pb-4">
       <div className="pt-6">
@@ -49,8 +50,8 @@ const BestSellingItemCard = ({
       </div>
       <div className="py-5">
         <Typography variant="h5">
-          {totalBestItemSold} {capitalizeFirstLetter(bestSellingItemData?.name)}{" "}
-          sold today
+          {bestItemSoldQuantity}{" "}
+          {capitalizeFirstLetter(bestSellingItemData?.name)} sold today
         </Typography>
 
         <Typography variant="h5">
@@ -77,56 +78,76 @@ const BestSellingItemCardNotFound = () => {
 };
 
 const BestSellingCategoryCard = ({
-  bestSellingItemData,
+  allItems,
   totalTransaction,
-  buyers,
 }: {
-  bestSellingItemData: itemProps;
+  allItems: itemProps[];
   totalTransaction: transactionProps[];
-  buyers: buyersProps[];
 }) => {
-  const pricesLength: number = bestSellingItemData.prices.length;
-  const totalBestItemSold: number = calculateBestItemSold(
-    totalTransaction,
-    bestSellingItemData
+  const { bestSellingCategory, calculateBestItemCategoryQuantity, rpc } =
+    useSummaryStore();
+  const bestItemCategoryQuantity = calculateBestItemCategoryQuantity(
+    allItems,
+    totalTransaction
   );
-  const totalBestItemRevenue: number = calculateBestItemRevenue(
-    totalTransaction,
-    bestSellingItemData,
-    buyers
-  );
+
   return (
     <div className="w-full border rounded-md px-6 shadow-sm pb-4">
       <div className="pt-6">
-        <Typography variant="label">Best Selling Item</Typography>
+        <Typography variant="label">Best Selling Category</Typography>
         <Typography variant="h3">
-          {capitalizeFirstLetter(bestSellingItemData?.name)}
+          {capitalizeFirstLetter(bestSellingCategory)}
         </Typography>
       </div>
-      <div className="w-full h-52 mt-4 rounded-md shadow-sm overflow-hidden bg-muted px-6 py-2 flex justify-center">
-        <Image
-          src={`/assets/items/${bestSellingItemData?.name}.png`}
-          width={200}
-          height={200}
-          alt="item"
-        />
+      <div className="w-full h-52 mt-4 flex justify-center items-center rounded-md shadow-sm overflow-hidden bg-muted px-6 py-2">
+        <Trophy strokeWidth={1} size={30} />
       </div>
       <div className="py-5">
         <Typography variant="h5">
-          {totalBestItemSold} {capitalizeFirstLetter(bestSellingItemData?.name)}{" "}
-          sold today
+          {bestItemCategoryQuantity} {bestSellingCategory} sold today
         </Typography>
 
         <Typography variant="h5">
-          This item generates a revenue of {formatToIDR(totalBestItemRevenue)}
+          This Item generated a revenue of {formatToIDR(rpc[0]?.revenue)}
         </Typography>
       </div>
     </div>
   );
 };
 
+const BestSellingCategoryCardNotFound = ({
+  allItems,
+  totalTransaction,
+}: {
+  allItems: itemProps[];
+  totalTransaction: transactionProps[];
+}) => {
+  const { bestSellingCategory, calculateBestItemCategoryQuantity, rpc } =
+    useSummaryStore();
+  const bestItemCategoryQuantity = calculateBestItemCategoryQuantity(
+    allItems,
+    totalTransaction
+  );
+
+  return (
+    <div className="w-full border rounded-md px-6 shadow-sm pb-4">
+      <div className="pt-6">
+        <Typography variant="label">Best Selling Category</Typography>
+        <Typography variant="h3">No item found</Typography>
+      </div>
+      <div className="w-full h-52 mt-4 flex justify-center items-center rounded-md shadow-sm overflow-hidden bg-muted px-6 py-2">
+        <Trophy strokeWidth={1} size={30} />
+      </div>
+      <div className="py-5">
+        <Typography variant="h5">Cannot retrive details</Typography>
+      </div>
+    </div>
+  );
+};
+
 export {
+  BestSellingCategoryCard,
   BestSellingItemCard,
   BestSellingItemCardNotFound,
-  BestSellingCategoryCard,
+  BestSellingCategoryCardNotFound,
 };

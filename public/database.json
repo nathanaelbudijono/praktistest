@@ -41,6 +41,30 @@
           "price": 50000
         }
       ]
+    },
+    {
+      "name": "short pants",
+      "type": "shorts",
+      "prices": [
+        {
+          "priceFor": "regular",
+          "price": 9000
+        }
+      ]
+    },
+    {
+      "name": "long pants",
+      "type": "pants",
+      "prices": [
+        {
+          "priceFor": "regular",
+          "price": 20000
+        },
+        {
+          "priceFor": "VIP",
+          "price": 15000
+        }
+      ]
     }
   ],
   "Buyers": [
@@ -59,6 +83,18 @@
     {
       "name": "Dipta",
       "type": "wholesale"
+    },
+    {
+      "name": "Eva",
+      "type": "VIP"
+    },
+    {
+      "name": "Fadil",
+      "type": "regular"
+    },
+    {
+      "name": "Gina",
+      "type": "VIP"
     }
   ],
   "Transaction": [
@@ -73,11 +109,6 @@
       "buyer": "Budi"
     },
     {
-      "item": "magic shirt",
-      "qty": 1,
-      "buyer": "Ani"
-    },
-    {
       "item": "oval hat",
       "qty": 1,
       "buyer": "Ani"
@@ -86,43 +117,21 @@
       "item": "square hat",
       "qty": 100,
       "buyer": "Dipta"
+    },
+    {
+      "item": "magic shirt",
+      "qty": 3,
+      "buyer": "Fadil"
+    },
+    {
+      "item": "short pants",
+      "qty": 5,
+      "buyer": "Gina"
+    },
+    {
+      "item": "long pants",
+      "qty": 2,
+      "buyer": "Eva"
     }
-  ],
-  "Summary": {
-    "totalTransaction": 5,
-    "bestSellingItem": "square hat",
-    "bestSellingCategory": "hats",
-    "rpc": [
-      {
-        "category": "hats",
-        "revenue": 1560000
-      },
-      {
-        "category": "tops",
-        "revenue": 100000
-      },
-      {
-        "category": "shorts",
-        "revenue": 0
-      }
-    ],
-    "revenue": 1660000,
-    "bestSpenders": [
-      {
-        "name": "Dipta",
-        "type": "wholesale",
-        "spent": 1500000
-      },
-      {
-        "name": "Ani",
-        "type": "regular",
-        "spent": 120000
-      },
-      {
-        "name": "Budi",
-        "type": "VIP",
-        "spent": 40000
-      }
-    ]
-  }
+  ]
 }

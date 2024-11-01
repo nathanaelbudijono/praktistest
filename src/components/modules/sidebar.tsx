@@ -13,7 +13,9 @@ const Sidebar = () => {
     <main className="hidden bg-muted md:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center px-4 lg:h-[60px] lg:px-6 mb-5">
-          <h1>Island</h1>
+          <h1 className="font-semibold text-lg text-green-800">
+            The Islanders
+          </h1>
         </div>
         <div className="flex-1">
           <nav className="grid items-start gap-y-3 px-2 text-sm font-medium lg:px-4">
@@ -46,24 +48,14 @@ export default Sidebar;
 
 const navItems: navItemProps[] = [
   {
-    href: "/",
+    href: `${BASE_URL}/admin/dashboard/`,
     icon: <LayoutDashboard strokeWidth={1} className="icon" />,
     label: "Dashboard",
-  },
-  {
-    href: "/drive",
-    icon: <SendToBack strokeWidth={1} className="icon" />,
-    label: "Order line",
   },
 
   {
     href: `${BASE_URL}/admin/dashboard/items`,
     icon: <PackageOpen strokeWidth={1} className="icon" />,
     label: "Manage Items",
-  },
-  {
-    href: "/trash",
-    icon: <Users strokeWidth={1} className="icon" />,
-    label: "Customers",
   },
 ];
