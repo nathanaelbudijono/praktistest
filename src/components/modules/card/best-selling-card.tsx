@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import Typography from "@/components/ui/typography";
 import { capitalizeFirstLetter, formatToIDR } from "@/lib/helper";
 import { useSummaryStore } from "@/lib/zustand/store";
@@ -21,6 +23,14 @@ const BestSellingItemCard = ({
   const { calculateBestItemSoldQuantity, calculateBestItemRevenue } =
     useSummaryStore();
 
+  const [imageSrc, setImageSrc] = React.useState<string>(
+    `/assets/items/${bestSellingItemData?.name}.png`
+  );
+
+  const handleError = () => {
+    setImageSrc("/assets/background.jpg");
+  };
+
   const bestItemSoldQuantity = calculateBestItemSoldQuantity(
     totalTransaction,
     bestSellingItemData
@@ -42,10 +52,11 @@ const BestSellingItemCard = ({
       </div>
       <div className="w-full h-52 mt-4 rounded-md shadow-sm overflow-hidden bg-muted px-6 py-2 flex justify-center">
         <Image
-          src={`/assets/items/${bestSellingItemData?.name}.png`}
+          src={imageSrc}
           width={200}
           height={200}
           alt="item"
+          onError={handleError}
         />
       </div>
       <div className="py-5">
