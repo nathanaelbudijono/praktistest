@@ -58,6 +58,7 @@ const config: Config = {
       },
       screens: {
         tablet: "600px",
+        dashboard: "1400px",
       },
     },
   },

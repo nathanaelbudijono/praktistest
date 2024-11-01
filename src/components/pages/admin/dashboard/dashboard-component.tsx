@@ -1,28 +1,25 @@
 import * as React from "react";
 
-import Typography from "@/components/ui/typography";
-
 import {
-  buyersProps,
-  itemProps,
-  summaryProps,
-  transactionProps,
-} from "@/types/database-types";
+  BestSellingCategoryCard,
+  BestSellingItemCard,
+  BestSellingItemCardNotFound,
+} from "@/components/modules/card/best-selling-card";
+import RevenueCard from "@/components/modules/card/revenue-card";
+import RevenuePerCategoryChart from "@/components/modules/chart/revenue-per-category-chart";
 import {
   handleFetchAllItems,
   handleFetchBuyer,
   handleFetchSummary,
   handleFetchTotalTransaction,
 } from "@/lib/fetcher";
-import { ArrowLeftRight, Coins, ShoppingBasket } from "lucide-react";
-import RevenueCard from "@/components/modules/card/revenue-card";
-import RevenuePerCategoryChart from "@/components/modules/chart/revenue-per-category-chart";
-import Image from "next/image";
-import { capitalizeFirstLetter } from "@/lib/helper";
 import {
-  BestSellingCard,
-  BestSellingCardNotFound,
-} from "@/components/modules/card/best-selling-card";
+  buyersProps,
+  itemProps,
+  summaryProps,
+  transactionProps,
+} from "@/types/database-types";
+import { ArrowLeftRight, Coins, ShoppingBasket } from "lucide-react";
 
 const DashboardComponent = () => {
   const [totalTransaction, setTotalTransaction] = React.useState<
@@ -88,14 +85,14 @@ const DashboardComponent = () => {
     allItems &&
     buyers &&
     totalTransaction && (
-      <main className="w-full flex gap-5 max-lg:flex-col">
-        <section className="w-1/2 max-md:w-full">
+      <main className="w-full flex gap-5 max-dashboard:flex-col">
+        <section className="w-1/2 max-dashboard:w-full">
           <div className="flex gap-2 max-md:flex-col">
             <Revenue summary={summary} totalTransaction={totalTransaction} />
             <RevenuePerCategoryChart summary={summary} />
           </div>
         </section>
-        <section className="w-1/2 max-md:w-full">
+        <section className="w-1/2 max-dashboard:w-full">
           <div className="h-full">
             <BestSelling
               summary={summary}
@@ -161,24 +158,24 @@ const BestSelling = ({
   totalTransaction: transactionProps[];
   buyers: buyersProps[];
 }) => {
-  const bestSellingData: itemProps | undefined = allItems.find(
+  const bestSellingItemData: itemProps | undefined = allItems.find(
     (item) => item.name === summary.bestSellingItem
   );
 
   return (
     <div className="grid grid-cols-2 gap-2 h-full">
-      {bestSellingData ? (
-        <BestSellingCard
-          bestSellingData={bestSellingData}
+      {bestSellingItemData ? (
+        <BestSellingItemCard
+          bestSellingItemData={bestSellingItemData}
           totalTransaction={totalTransaction}
           buyers={buyers}
         />
       ) : (
-        <BestSellingCardNotFound />
+        <BestSellingItemCardNotFound />
       )}
 
-      <BestSellingCard
-        bestSellingData={bestSellingData}
+      <BestSellingCategoryCard
+        summary={summary}
         totalTransaction={totalTransaction}
         buyers={buyers}
       />

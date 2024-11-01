@@ -12,6 +12,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import useBarWidth from "@/hooks/useBarWidth";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { summaryProps } from "@/types/database-types";
 import { TrendingUp } from "lucide-react";
@@ -24,6 +25,7 @@ import {
 } from "recharts";
 
 const RevenuePerCategoryChart = ({ summary }: { summary: summaryProps }) => {
+  const width = useBarWidth();
   const chartConfig = {
     revenue: {
       label: `Rp`,
@@ -38,12 +40,12 @@ const RevenuePerCategoryChart = ({ summary }: { summary: summaryProps }) => {
         <CardDescription>This Month</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig} className="w-full">
           <BarChart
             accessibilityLayer
             data={summary.rpc}
-            width={500}
-            height={250}
+            width={width}
+            height={300}
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -61,11 +63,6 @@ const RevenuePerCategoryChart = ({ summary }: { summary: summaryProps }) => {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-      </CardFooter>
     </Card>
   );
 };
