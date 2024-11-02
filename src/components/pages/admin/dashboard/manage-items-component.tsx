@@ -4,7 +4,10 @@ import ItemsCard from "@/components/modules/card/items-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Typography from "@/components/ui/typography";
-import { handleFetchAllItems, handleFetchCategory } from "@/lib/fetcher";
+import {
+  handleFetchAllItems,
+  handleFetchCategory,
+} from "@/lib/fetcher/get-fetcher";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { itemProps } from "@/types/database-types";
 import ManageItemSkeleton from "@/components/modules/skeleton/manage-item-skeleton";

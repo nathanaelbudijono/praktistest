@@ -9,13 +9,13 @@ import {
   fetchBuyer,
   fetchCategory,
   fetchTotalTransaction,
-} from "./api";
+} from "../api/get-api";
 import {
   checkBuyerName,
   checkItemsName,
   checkItemsPrice,
   checkValidTransaction,
-} from "./validation";
+} from "../validation";
 
 export const handleFetchCategory = async (): Promise<string[] | undefined> => {
   try {

@@ -2,6 +2,7 @@ import {
   bestSpendersProps,
   buyersProps,
   buyerTransactionProps,
+  rpiProps,
   itemProps,
   rpcProps,
   transactionProps,
@@ -14,6 +15,7 @@ export interface summarySlicesProps {
   bestSellingCategory: string;
   revenue: number;
   rpc: rpcProps[];
+  rpi: rpiProps[];
   bestSpenders: bestSpendersProps[];
   buyerTransaction: buyerTransactionProps[];
 }
@@ -47,6 +49,7 @@ export const summarySlices: StateCreator<
   bestSellingCategory: "",
   revenue: 0,
   rpc: [],
+  rpi: [],
   bestSpenders: [],
   buyerTransaction: [],
   calculateSummary: (
@@ -59,6 +62,7 @@ export const summarySlices: StateCreator<
       let transactionCount: number = 0;
 
       const revenueByCategory: Record<string, number> = {};
+      const revenueByItem: Record<string, number> = {};
       const itemSalesCount: Record<string, number> = {};
       const spenderTotal: Record<string, bestSpendersProps> = {};
       const buyerTransaction: buyerTransactionProps[] = [];
@@ -94,6 +98,10 @@ export const summarySlices: StateCreator<
         // calculate revenue by category
         revenueByCategory[itemData?.type] =
           (revenueByCategory[itemData?.type] || 0) + transactionRevenue;
+
+        // calculte revenue by item
+        revenueByItem[itemData.name] =
+          (revenueByItem[itemData.name] || 0) + transactionRevenue;
 
         //calculate itemSalescount
         itemSalesCount[itemData.name] =
@@ -140,6 +148,14 @@ export const summarySlices: StateCreator<
         }))
         .sort((a, b) => b.revenue - a.revenue);
 
+      // get ipc
+      const rpi = Object.entries(revenueByItem)
+        .map(([item, revenue]) => ({
+          item,
+          revenue,
+        }))
+        .sort((a, b) => b.revenue - a.revenue);
+
       // get 3 best spender
       const bestSpenders = Object.values(spenderTotal)
         .sort((a, b) => b.spent - a.spent)
@@ -151,6 +167,7 @@ export const summarySlices: StateCreator<
         bestSellingCategory,
         revenue: totalTransaction,
         rpc,
+        rpi,
         bestSpenders,
         buyerTransaction,
       });

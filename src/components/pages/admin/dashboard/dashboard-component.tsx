@@ -7,7 +7,7 @@ import {
 } from "@/components/modules/card/best-selling-card";
 import RevenueCard from "@/components/modules/card/revenue-card";
 import TopSpenderCard from "@/components/modules/card/top-spender-card";
-import RevenuePerCategoryChart from "@/components/modules/chart/revenue-per-category-chart";
+import RevenueChart from "@/components/modules/chart/revenue-chart";
 import { transactionColumns } from "@/components/modules/table/transaction-column";
 import TransactionDataTable from "@/components/modules/table/transaction-table";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import {
   handleFetchAllItems,
   handleFetchBuyer,
   handleFetchTotalTransaction,
-} from "@/lib/fetcher";
+} from "@/lib/fetcher/get-fetcher";
 import { useSummaryStore } from "@/lib/zustand/store";
 import {
   buyersProps,
@@ -43,6 +43,7 @@ const DashboardComponent = () => {
     transactionCount,
     revenue,
     rpc,
+    rpi,
     buyerTransaction,
     bestSellingCategory,
     bestSellingItem,
@@ -160,7 +161,7 @@ const DashboardComponent = () => {
                   transactionCount={transactionCount}
                   revenue={revenue}
                 />
-                <RevenuePerCategoryChart rpc={rpc} />
+                <RevenueChart rpc={rpc} rpi={rpi} />
               </div>
             </section>
             <section className="w-1/2 max-dashboard:w-full">

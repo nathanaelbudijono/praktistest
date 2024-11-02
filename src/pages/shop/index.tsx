@@ -1,9 +1,10 @@
 import * as React from "react";
 
-import { handleFetchAllItems } from "@/lib/fetcher";
+import { handleFetchAllItems } from "@/lib/fetcher/get-fetcher";
 import { useCartStore } from "@/lib/zustand/store";
 import { itemProps } from "@/types/database-types";
 import { Button } from "@/components/ui/button";
+import Header from "@/components/modules/header";
 
 const ShopPage = () => {
   const [allItems, setAllItems] = React.useState<itemProps[] | null>(null);
@@ -26,6 +27,7 @@ const ShopPage = () => {
   }, []);
   return (
     <div>
+      <Header />
       <h1>Shop Page</h1>
       <div>
         {allItems?.map((item) => (

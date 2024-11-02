@@ -30,6 +30,11 @@ export interface rpcProps {
   revenue: number;
 }
 
+export interface rpiProps {
+  item: string;
+  revenue: number;
+}
+
 export interface bestSpendersProps {
   name: string;
   type: string;

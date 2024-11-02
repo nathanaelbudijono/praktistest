@@ -95,6 +95,22 @@
     {
       "name": "Gina",
       "type": "VIP"
+    },
+    {
+      "name": "nathan",
+      "type": "regular"
+    },
+    {
+      "name": "budi",
+      "type": "wholesale"
+    },
+    {
+      "name": "zaki",
+      "type": "VIP"
+    },
+    {
+      "name": "alex",
+      "type": "regular"
     }
   ],
   "Transaction": [

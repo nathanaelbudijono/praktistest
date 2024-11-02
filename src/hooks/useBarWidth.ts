@@ -1,7 +1,7 @@
 import * as React from "react";
 
 const useBarWidth = (): number => {
-  const [barWidth, setBarWidth] = React.useState<number>(500);
+  const [barWidth, setBarWidth] = React.useState<number>(495);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -10,7 +10,7 @@ const useBarWidth = (): number => {
       } else if (window.innerWidth < 1600 && window.innerWidth >= 1400) {
         setBarWidth(260);
       } else {
-        setBarWidth(500);
+        setBarWidth(495);
       }
     };
 
