@@ -26,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-const TransactionDataTable = <TData, TValue>({
+const SpenderTable = <TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) => {
@@ -54,7 +54,7 @@ const TransactionDataTable = <TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Buyers..."
-          value={(table.getColumn("buyer")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("buyer")?.setFilterValue(event.target.value)
           }
@@ -133,4 +133,4 @@ const TransactionDataTable = <TData, TValue>({
   );
 };
 
-export default TransactionDataTable;
+export default SpenderTable;

@@ -119,7 +119,7 @@ const ItemDetailComponent = ({ item }: { item: string }) => {
             <div className="mt-5 w-full">
               <Typography variant="p">Item Price</Typography>
 
-              {!permission && (
+              {permission !== "user" && (
                 <div>
                   {itemDetailLength > 1 ? (
                     <Typography variant="h4">
@@ -145,6 +145,7 @@ const ItemDetailComponent = ({ item }: { item: string }) => {
                 </Typography>
               )}
             </div>
+
             <div className="mt-5 flex items-center space-x-2 max-lg:justify-center max-lg:mb-10">
               <Button
                 onClick={() => {

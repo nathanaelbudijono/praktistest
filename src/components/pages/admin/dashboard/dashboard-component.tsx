@@ -11,12 +11,7 @@ import RevenueChart from "@/components/modules/chart/revenue-chart";
 import { transactionColumns } from "@/components/modules/table/transaction-column";
 import TransactionDataTable from "@/components/modules/table/transaction-table";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import Typography from "@/components/ui/typography";
 import {
   handleFetchAllItems,
@@ -25,6 +20,7 @@ import {
 } from "@/lib/fetcher/get-fetcher";
 import { useSummaryStore } from "@/lib/zustand/store";
 import {
+  bestSpendersProps,
   buyersProps,
   itemProps,
   transactionProps,
@@ -34,8 +30,22 @@ import {
   Coins,
   RefreshCcw,
   ShoppingBasket,
+  Wrench,
 } from "lucide-react";
 import DashboardSkeleton from "@/components/modules/skeleton/dashboard-skeleton";
+import RefreshToolTip from "@/components/modules/tooltip/refresh-tooltip";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import SpenderTable from "@/components/modules/table/spender-table";
+import { spenderColumns } from "@/components/modules/table/spender-column";
 
 const DashboardComponent = () => {
   const {
@@ -49,12 +59,15 @@ const DashboardComponent = () => {
     bestSellingItem,
     bestSpenders,
   } = useSummaryStore();
+
   const [totalTransaction, setTotalTransaction] = React.useState<
     transactionProps[] | null
   >(null);
   const [allItems, setAllItems] = React.useState<itemProps[] | null>(null);
   const [buyers, setBuyers] = React.useState<buyersProps[] | null>(null);
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [spenderView, setSpenderView] = React.useState<string>("card");
 
   const getTransaction = async (): Promise<void> => {
     try {
@@ -89,7 +102,7 @@ const DashboardComponent = () => {
     }
   };
 
-  const getAllData = async () => {
+  const getAllData = async (): Promise<void> => {
     setIsLoading(true);
     await getTransaction();
     await getAllItems();
@@ -117,18 +130,7 @@ const DashboardComponent = () => {
         <Typography variant="p" color="muted">
           Failed to load data. Please refresh the page and look toast for error
         </Typography>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={getAllData} variant="ghost">
-                <RefreshCcw strokeWidth={1} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Refresh</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <RefreshToolTip getAllData={getAllData} />
       </section>
     );
   }
@@ -138,18 +140,7 @@ const DashboardComponent = () => {
         <Typography variant="p" color="muted">
           This is your dashboard, you can view your store performance here.
         </Typography>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button onClick={getAllData} variant="ghost">
-                <RefreshCcw strokeWidth={1} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Refresh</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <RefreshToolTip getAllData={getAllData} />
       </section>
       {allItems && buyers && totalTransaction && (
         <section className="md:h-[95vh] overflow-auto">
@@ -176,7 +167,7 @@ const DashboardComponent = () => {
               </div>
             </section>
           </section>
-          <section className="mt-5 flex gap-7 max-dashboard:flex-col">
+          <section className="mt-5 flex gap-7 h-full max-dashboard:flex-col">
             <section className="w-1/2 max-dashboard:w-full">
               <Typography variant="label" className="mb-3">
                 Today Transactions
@@ -186,26 +177,13 @@ const DashboardComponent = () => {
                 data={buyerTransaction}
               />
             </section>
-            <section className="w-1/2 max-dashboard:w-full">
-              <Typography variant="label" className="mb-3">
-                Top Spenders
-              </Typography>
-              <Typography variant="p" color="muted">
-                Click to view more details
-              </Typography>
-              <div className="h-full grid grid-cols-3 items-center max-dashboard:mt-5">
-                {bestSpenders?.map((item, index) => {
-                  return (
-                    <div key={index}>
-                      <TopSpenderCard
-                        item={item}
-                        index={index}
-                        totalTransaction={totalTransaction}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <section className="w-1/2  max-dashboard:w-full">
+              <Spender
+                spenderView={spenderView}
+                setSpenderView={setSpenderView}
+                bestSpender={bestSpenders}
+                totalTransaction={totalTransaction}
+              />
             </section>
           </section>
         </section>
@@ -293,5 +271,65 @@ const BestSelling = ({
         <BestSellingItemCardNotFound />
       )}
     </div>
+  );
+};
+
+const Spender = ({
+  spenderView,
+  setSpenderView,
+  bestSpender,
+  totalTransaction,
+}: {
+  spenderView: string;
+  setSpenderView: React.Dispatch<React.SetStateAction<string>>;
+  bestSpender: bestSpendersProps[];
+  totalTransaction: transactionProps[];
+}) => {
+  return (
+    <section className="h-full">
+      <div className="flex justify-between items-center">
+        <Typography variant="label" className="mb-3">
+          Top Spenders
+        </Typography>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <Wrench className="text-black/50" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>View</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuRadioGroup
+              value={spenderView}
+              onValueChange={setSpenderView}
+            >
+              <DropdownMenuRadioItem value="card">Cards</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="table">Table</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <Typography variant="p" color="muted" className="mb-3">
+        Click to view more details
+      </Typography>
+      {spenderView === "card" ? (
+        <div className="grid grid-cols-3 items-center max-dashboard:mt-5">
+          {bestSpender?.map((item, index) => {
+            return (
+              <div key={index}>
+                <TopSpenderCard
+                  item={item}
+                  index={index}
+                  totalTransaction={totalTransaction}
+                />
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <SpenderTable data={bestSpender} columns={spenderColumns} />
+      )}
+    </section>
   );
 };

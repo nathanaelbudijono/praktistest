@@ -42,36 +42,35 @@ const RevenueChart = ({ rpc, rpi }: { rpc: rpcProps[]; rpi: rpiProps[] }) => {
 
   return (
     <Card>
-      <CardHeader className="flex-row justify-between items-center">
-        <div>
+      <CardHeader>
+        <div className="flex justify-between items-center">
           <CardTitle>
             Revenue Per {selectedCategory === "rpc" ? "Category" : "Item"}
           </CardTitle>
-          <CardDescription className="mt-1">This Month</CardDescription>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm">
+                <Wrench className="text-black/50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={selectedCategory}
+                onValueChange={setSelectedCategory}
+              >
+                <DropdownMenuRadioItem value="rpc">
+                  Revenue Per Category
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="rpi">
+                  Revenue Per Item
+                </DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm">
-              <Wrench className="text-black/50" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup
-              value={selectedCategory}
-              onValueChange={setSelectedCategory}
-            >
-              <DropdownMenuRadioItem value="rpc">
-                Revenue Per Category
-              </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="rpi">
-                Revenue Per Item
-              </DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <CardDescription className="mt-1">This Month</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="w-full">
