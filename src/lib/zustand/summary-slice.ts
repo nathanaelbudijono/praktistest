@@ -62,6 +62,7 @@ export const summarySlices: StateCreator<
       const itemSalesCount: Record<string, number> = {};
       const spenderTotal: Record<string, bestSpendersProps> = {};
       const buyerTransaction: buyerTransactionProps[] = [];
+
       transactions.forEach((transaction) => {
         //data
         const itemData = items.find((item) => item.name === transaction.item);
@@ -85,8 +86,9 @@ export const summarySlices: StateCreator<
 
         // calculate total revenue
         const transactionRevenue = price * transaction.qty;
-
         totalTransaction += transactionRevenue;
+
+        // calculate total order
         transactionCount++;
 
         // calculate revenue by category
@@ -156,6 +158,7 @@ export const summarySlices: StateCreator<
       console.log(err);
     }
   },
+
   calculateBestItemSoldQuantity: (
     totalTransaction: transactionProps[],
     bestSellingData: itemProps

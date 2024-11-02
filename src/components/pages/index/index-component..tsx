@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import Layout from "@/components/ui/layout/layout";
 import Typography from "@/components/ui/typography";
 import { BASE_URL } from "@/constant/env";
-import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/router";
 
 const IndexComponent = () => {
@@ -28,10 +27,7 @@ const IndexComponent = () => {
               size="lg"
               variant="outline"
               onClick={() => {
-                toast({
-                  title: "Dummy Button",
-                  description: "Please press View Dashboard",
-                });
+                router.push(`${BASE_URL}/shop`);
               }}
             >
               Explore Shops
