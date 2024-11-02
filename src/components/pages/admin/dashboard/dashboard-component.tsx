@@ -89,7 +89,7 @@ const DashboardComponent = () => {
     }
   };
 
-  const fetchData = async () => {
+  const getAllData = async () => {
     setIsLoading(true);
     await getTransaction();
     await getAllItems();
@@ -98,7 +98,7 @@ const DashboardComponent = () => {
   };
 
   React.useEffect(() => {
-    fetchData();
+    getAllData();
   }, []);
 
   // useEffect to calcualte summary
@@ -120,7 +120,7 @@ const DashboardComponent = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button onClick={fetchData} variant="ghost">
+              <Button onClick={getAllData} variant="ghost">
                 <RefreshCcw strokeWidth={1} />
               </Button>
             </TooltipTrigger>
@@ -141,7 +141,7 @@ const DashboardComponent = () => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button onClick={fetchData} variant="ghost">
+              <Button onClick={getAllData} variant="ghost">
                 <RefreshCcw strokeWidth={1} />
               </Button>
             </TooltipTrigger>
@@ -155,7 +155,7 @@ const DashboardComponent = () => {
         <section className="md:h-[95vh] overflow-auto">
           <section className="w-full flex gap-7 max-dashboard:flex-col">
             <section className="w-1/2 max-dashboard:w-full">
-              <div className="flex gap-2 max-md:flex-col">
+              <div className="flex gap-5 max-md:flex-col">
                 <Revenue
                   totalTransaction={totalTransaction}
                   transactionCount={transactionCount}

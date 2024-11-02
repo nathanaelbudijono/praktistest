@@ -7,7 +7,7 @@ const loginHandler = (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (req.method === "POST") {
       const { name, type } = req.body;
-      console.log(req.body);
+
       if (!name || !type) {
         return res
           .status(400)
@@ -28,6 +28,8 @@ const loginHandler = (req: NextApiRequest, res: NextApiResponse) => {
         const checkBuyer = jsonData.Buyers.find(
           (item: buyersProps) => item.name === name
         );
+
+        console.log(checkBuyer);
 
         if (checkBuyer) {
           return res

@@ -4,6 +4,7 @@ import {
   itemProps,
   transactionProps,
 } from "@/types/database-types";
+import { itemDetailResponseProps } from "@/types/response-types";
 
 export const fetchCategory = async (): Promise<string[] | undefined> => {
   try {
@@ -49,6 +50,21 @@ export const fetchTotalTransaction = async (): Promise<
 export const fetchBuyer = async (): Promise<buyersProps[] | undefined> => {
   try {
     const res = await fetch(`${API_URL}/buyers`, {
+      method: "GET",
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+    return undefined;
+  }
+};
+
+export const fetchItemDetail = async (
+  id: string
+): Promise<itemDetailResponseProps | undefined> => {
+  try {
+    const res = await fetch(`${API_URL}/items/details/${id}`, {
       method: "GET",
     });
     const data = await res.json();

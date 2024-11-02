@@ -8,8 +8,13 @@ export interface cartSlicesProps {
 }
 
 export interface cartFunctionProps {
-  addCart: (item: itemProps, type: string) => void;
-  removeCart: (item: itemProps) => void;
+  addCart: (
+    item: itemProps,
+    type: string | null,
+    total: number,
+    buyer: string | null
+  ) => void;
+  removeCart: (itemName: string) => void;
   clearCart: () => void;
 }
 
@@ -19,34 +24,38 @@ export const cartSlices: StateCreator<cartSlicesProps & cartFunctionProps> = (
 ) => ({
   cart: [],
   totalCart: 0,
-  addCart: (item: itemProps, type: string) => {
+  addCart: (
+    item: itemProps,
+    type: string | null,
+    total: number,
+    buyer: string | null
+  ) => {
+    if (!buyer) return;
     const cartData = get().cart;
     const checkCart = cartData.find((cart) => cart.item === item.name);
     const userPrice = item.prices.find((price) => price.priceFor === type);
     const price = userPrice ? userPrice.price : item.prices[0].price;
     if (checkCart) {
-      checkCart.qty += 1;
+      checkCart.qty = total;
     } else {
       cartData.push({
-        buyer: "buyer",
+        buyer: buyer,
         item: item.name,
-        qty: 1,
+        qty: total,
         price: price,
       });
     }
-    set({ totalCart: get().totalCart + 1 });
+    set({ totalCart: get().cart.reduce((acc, curr) => acc + curr.qty, 0) });
   },
-  removeCart: (item: itemProps) => {
+  removeCart: (itemName: string) => {
     const cartData = get().cart;
-    const checkCart = cartData.find((cart) => cart.item === item.name);
+    const checkCart = cartData.find((cart) => cart.item === itemName);
+
     if (checkCart) {
-      if (checkCart.qty === 1) {
-        cartData.filter((cart) => cart.item !== item.name);
-      } else if (checkCart.qty > 1) {
-        checkCart.qty -= 1;
-      }
+      const newCart = cartData.filter((cart) => cart.item !== itemName);
+      set({ cart: newCart });
     }
-    set({ totalCart: get().totalCart - 1 });
+    set({ totalCart: get().cart.reduce((acc, curr) => acc + curr.qty, 0) });
   },
   clearCart: () => {
     set({ cart: [], totalCart: 0 });

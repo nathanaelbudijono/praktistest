@@ -8,6 +8,7 @@ import {
   fetchAllItems,
   fetchBuyer,
   fetchCategory,
+  fetchItemDetail,
   fetchTotalTransaction,
 } from "../api/get-api";
 import {
@@ -142,6 +143,40 @@ export const handleFetchBuyer = async (): Promise<
         variant: "destructive",
         title: "Failed to fetch buyer",
         description: `Buyer name is not unqiue on ${resValidBuyerName}`,
+      });
+      return undefined;
+    }
+  } catch (err) {
+    toast({
+      variant: "destructive",
+      title: "Something went wrong",
+    });
+    console.log(err);
+    return undefined;
+  }
+};
+
+export const handleFetchItemDetail = async (
+  item: string
+): Promise<itemProps | undefined> => {
+  try {
+    const data = await fetchItemDetail(item);
+    if (data) {
+      if (data.status === true) {
+        return data.itemDetail;
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Failed to fetch item detail",
+          description: data.message,
+        });
+        return undefined;
+      }
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Failed to fetch item detail",
+        description: "Data is empty",
       });
       return undefined;
     }

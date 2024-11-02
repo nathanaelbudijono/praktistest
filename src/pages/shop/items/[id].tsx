@@ -6,12 +6,15 @@ import { useRouter } from "next/router";
 const ItemsDetailsPage = () => {
   const router = useRouter();
   const item = router.query.id as string;
+  if (!item) {
+    return <div>Loading..</div>;
+  }
   return (
     <main>
       <Seo
         templateTitle={`${item ? capitalizeFirstLetter(item) : ""} Details`}
       />
-      <ItemDetailComponent />
+      <ItemDetailComponent item={item} />
     </main>
   );
 };

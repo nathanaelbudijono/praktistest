@@ -1,7 +1,7 @@
+import { itemProps } from "@/types/database-types";
+import fs from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import fs from "fs";
-import { itemProps } from "@/types/database-types";
 
 const categoryHandler = (req: NextApiRequest, res: NextApiResponse) => {
   try {

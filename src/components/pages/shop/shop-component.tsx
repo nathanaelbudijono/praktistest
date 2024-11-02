@@ -1,5 +1,8 @@
+import * as React from "react";
+
 import ShopCard from "@/components/modules/card/shop-card";
 import Header from "@/components/modules/header";
+import ShopSkeleton from "@/components/modules/skeleton/shop-skeleton";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -20,7 +23,7 @@ import {
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { itemProps } from "@/types/database-types";
 import { Filter } from "lucide-react";
-import * as React from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const ShopComponent = () => {
   const [allItems, setAllItems] = React.useState<itemProps[] | null>(null);
@@ -31,6 +34,7 @@ const ShopComponent = () => {
   const [categorySelected, setCategorySelected] = React.useState<string>("");
   const [search, setSearch] = React.useState<string>("");
   const [filter, setFilter] = React.useState<string>("");
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const getAllItems = async () => {
     try {
@@ -53,6 +57,13 @@ const ShopComponent = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const getAllData = async (): Promise<void> => {
+    setIsLoading(true);
+    await getAllItems();
+    await getCategory();
+    setIsLoading(false);
   };
 
   const handleFilterCategory = (item: string): void => {
@@ -106,9 +117,16 @@ const ShopComponent = () => {
   }, [search, performSearch]);
 
   React.useEffect(() => {
-    getAllItems();
-    getCategory();
+    getAllData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <ShopSkeleton />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>

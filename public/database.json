@@ -72,7 +72,6 @@
       "description": "Versatile long pants suitable for both casual and formal occasions."
     }
   ],
-
   "Buyers": [
     {
       "name": "Ani",
@@ -104,14 +103,6 @@
     },
     {
       "name": "nathan",
-      "type": "regular"
-    },
-    {
-      "name": "budi",
-      "type": "wholesale"
-    },
-    {
-      "name": "zaki",
       "type": "VIP"
     }
   ],
@@ -150,6 +141,16 @@
       "item": "long pants",
       "qty": 2,
       "buyer": "Eva"
+    },
+    {
+      "item": "square hat",
+      "qty": 4,
+      "buyer": "nathan"
+    },
+    {
+      "item": "long pants",
+      "qty": 2,
+      "buyer": "nathan"
     }
   ]
 }
