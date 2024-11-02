@@ -1,6 +1,7 @@
 export interface itemProps {
   name: string;
   type: string;
+  description: string;
   prices: pricesProps[];
 }
 

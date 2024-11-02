@@ -7,7 +7,7 @@ const ContentTitle = () => {
   const time = useTimeOfDay();
   return (
     <main>
-      <Typography variant="h3">Good {time}, TIS User</Typography>
+      <Typography variant="h3">Good {time}, TIS Admin</Typography>
     </main>
   );
 };

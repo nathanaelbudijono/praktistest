@@ -99,13 +99,13 @@ const ManageItemsComponent = () => {
       </Typography>
       <section className="md:h-[95vh] overflow-auto mt-5">
         <section>
-          <div className="space-x-3 flex flex-grow gap-2">
+          <div className="flex flex-wrap gap-2">
             {allItems &&
               category &&
               category?.map((item, index) => {
                 return (
                   <Button
-                    className="w-40"
+                    size="sm"
                     key={index}
                     onClick={() => handleFilterCategory(item)}
                     variant={categorySelected !== item ? "default" : "outline"}
@@ -128,12 +128,16 @@ const ManageItemsComponent = () => {
             />
           )}
 
-          {filteredItems?.length !== 0 && (
-            <div className="grid grid-cols-1 gap-3 tablet:grid-cols-2 xl:grid-cols-3 ">
+          {filteredItems?.length !== 0 ? (
+            <div className="grid grid-cols-1 gap-3 tablet:grid-cols-2 xl:grid-cols-3">
               {filteredItems?.map((item, index) => {
                 return <ItemsCard key={index} item={item} />;
               })}
             </div>
+          ) : (
+            <Typography variant="p" color="muted">
+              No items found
+            </Typography>
           )}
         </section>
 

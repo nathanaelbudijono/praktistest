@@ -12,7 +12,8 @@
           "priceFor": "VIP",
           "price": 15000
         }
-      ]
+      ],
+      "description": "A stylish oval-shaped hat perfect for casual outings."
     },
     {
       "name": "square hat",
@@ -30,7 +31,8 @@
           "priceFor": "wholesale",
           "price": 15000
         }
-      ]
+      ],
+      "description": "A trendy square hat that adds flair to any outfit."
     },
     {
       "name": "magic shirt",
@@ -40,17 +42,19 @@
           "priceFor": "regular",
           "price": 50000
         }
-      ]
+      ],
+      "description": "A unique shirt that brings a touch of magic to your wardrobe."
     },
     {
-      "name": "short pants",
+      "name": "shorts",
       "type": "shorts",
       "prices": [
         {
           "priceFor": "regular",
           "price": 9000
         }
-      ]
+      ],
+      "description": "Comfortable short ideal for warm weather."
     },
     {
       "name": "long pants",
@@ -64,9 +68,11 @@
           "priceFor": "wholesale",
           "price": 15000
         }
-      ]
+      ],
+      "description": "Versatile long pants suitable for both casual and formal occasions."
     }
   ],
+
   "Buyers": [
     {
       "name": "Ani",
@@ -107,10 +113,6 @@
     {
       "name": "zaki",
       "type": "VIP"
-    },
-    {
-      "name": "alex",
-      "type": "regular"
     }
   ],
   "Transaction": [
@@ -140,7 +142,7 @@
       "buyer": "Fadil"
     },
     {
-      "item": "short pants",
+      "item": "shorts",
       "qty": 5,
       "buyer": "Gina"
     },

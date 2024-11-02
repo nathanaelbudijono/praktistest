@@ -24,6 +24,10 @@ const ItemsCard = ({ item }: { item: itemProps }) => {
   const handleError = () => {
     setImageSrc("/assets/background.jpg");
   };
+
+  React.useEffect(() => {
+    setImageSrc(`/assets/items/${item.name}.png`);
+  }, [item.name]);
   return (
     <div className="w-full border border-muted rounded-md px-6 shadow-sm pb-4 hover:scale-105 transition-transform duration-100 ease-in-out">
       <div className="w-full h-52 mt-4 rounded-md shadow-sm overflow-hidden bg-muted px-6 py-2 flex justify-center">
@@ -61,10 +65,7 @@ const ItemsCard = ({ item }: { item: itemProps }) => {
               <DialogTitle>
                 {capitalizeFirstLetter(item.name)} Details
               </DialogTitle>
-              <DialogDescription>
-                Details regarding items will be shown here, including prices and
-                buyers.
-              </DialogDescription>
+              <DialogDescription>{item.description}</DialogDescription>
               <div className="space-y-3">
                 {item.prices.map((price, index) => {
                   const isSpecialPrice = item.prices.some(

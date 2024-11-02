@@ -8,7 +8,7 @@ export interface cartSlicesProps {
 }
 
 export interface cartFunctionProps {
-  addCart: (item: itemProps) => void;
+  addCart: (item: itemProps, type: string) => void;
   removeCart: (item: itemProps) => void;
   clearCart: () => void;
 }
@@ -19,9 +19,11 @@ export const cartSlices: StateCreator<cartSlicesProps & cartFunctionProps> = (
 ) => ({
   cart: [],
   totalCart: 0,
-  addCart: (item: itemProps) => {
+  addCart: (item: itemProps, type: string) => {
     const cartData = get().cart;
     const checkCart = cartData.find((cart) => cart.item === item.name);
+    const userPrice = item.prices.find((price) => price.priceFor === type);
+    const price = userPrice ? userPrice.price : item.prices[0].price;
     if (checkCart) {
       checkCart.qty += 1;
     } else {
@@ -29,6 +31,7 @@ export const cartSlices: StateCreator<cartSlicesProps & cartFunctionProps> = (
         buyer: "buyer",
         item: item.name,
         qty: 1,
+        price: price,
       });
     }
     set({ totalCart: get().totalCart + 1 });

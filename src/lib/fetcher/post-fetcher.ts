@@ -14,6 +14,7 @@ export const handleFetchLogin = async ({
       if (data.status === true) {
         document.cookie = `name = ${name}; path=/; max-age=86400`;
         localStorage.setItem("name", JSON.stringify(name));
+        localStorage.setItem("type", JSON.stringify(type));
         toast({
           title: `${name} account created successfully`,
           description: data.message,
