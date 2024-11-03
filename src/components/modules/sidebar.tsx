@@ -2,7 +2,7 @@
 
 import { BASE_URL } from "@/constant/env";
 import { navItemProps } from "@/types/types";
-import { LayoutDashboard, PackageOpen } from "lucide-react";
+import { LayoutDashboard, PackageOpen, Store } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -57,5 +57,10 @@ const navItems: navItemProps[] = [
     href: `${BASE_URL}/admin/dashboard/items`,
     icon: <PackageOpen strokeWidth={1} className="icon" />,
     label: "Manage Items",
+  },
+  {
+    href: `${BASE_URL}/shop`,
+    icon: <Store strokeWidth={1} className="icon" />,
+    label: "Shop",
   },
 ];

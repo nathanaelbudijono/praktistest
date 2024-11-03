@@ -1,12 +1,40 @@
+import * as React from "react";
+
 import Header from "@/components/modules/header";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/ui/layout/layout";
 import Typography from "@/components/ui/typography";
 import { BASE_URL } from "@/constant/env";
 import { useRouter } from "next/router";
+import { toast } from "@/hooks/use-toast";
 
 const IndexComponent = () => {
   const router = useRouter();
+
+  const [permissionStore, setPermissionStore] = React.useState<string | null>(
+    null
+  );
+
+  React.useEffect(() => {
+    const name = localStorage.getItem("permission");
+    setPermissionStore(name);
+  }, []);
+
+  const handleRouteDashboard = (): void => {
+    if (permissionStore === "user") {
+      toast({
+        variant: "destructive",
+        title: "Cannot enter admin mode",
+        description: "Please logout from user mode",
+      });
+      return;
+    }
+    document.cookie = `name = admin; path=/; max-age=86400`;
+    localStorage.setItem("name", "admin");
+    localStorage.setItem("permission", "admin");
+    localStorage.setItem("type", "admin");
+    router.push(`${BASE_URL}/admin/dashboard`);
+  };
   return (
     <Layout>
       <Header />
@@ -32,12 +60,7 @@ const IndexComponent = () => {
             >
               Explore Shops
             </Button>
-            <Button
-              size="lg"
-              onClick={() => {
-                router.push(`${BASE_URL}/admin/dashboard`);
-              }}
-            >
+            <Button size="lg" onClick={handleRouteDashboard}>
               View Dashboard
             </Button>
           </div>

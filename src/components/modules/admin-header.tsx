@@ -9,25 +9,35 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { navItemProps } from "@/types/types";
-
 import { BASE_URL } from "@/constant/env";
+import { navItemProps } from "@/types/types";
 import {
   CircleUser,
   LayoutDashboard,
   LogOut,
   Menu,
   PackageOpen,
-  UserPen,
+  Store,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Typography from "../ui/typography";
 import { useRouter } from "next/router";
+import Typography from "../ui/typography";
 
 const AdminHeader = ({ title }: { title: string }) => {
   const path = usePathname();
   const router = useRouter();
+
+  const handleLogout = () => {
+    try {
+      localStorage.clear();
+      document.cookie =
+        "permission=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      router.push(`${BASE_URL}`);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <header className="flex h-14 items-center justify-between md:justify-between gap-4 bg-muted px-4 lg:h-[60px] lg:px-6">
@@ -73,13 +83,10 @@ const AdminHeader = ({ title }: { title: string }) => {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>Admin</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <UserPen strokeWidth={1} size={16} className="mr-1" />
-            Edit Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => router.push(`${BASE_URL}`)}>
+
+          <DropdownMenuItem onClick={handleLogout}>
             <LogOut strokeWidth={1} size={16} className="mr-1" /> Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -101,5 +108,10 @@ const navItems: navItemProps[] = [
     href: `${BASE_URL}/admin/dashboard/items`,
     icon: <PackageOpen strokeWidth={1} className="icon" />,
     label: "Manage Items",
+  },
+  {
+    href: `${BASE_URL}/shop`,
+    icon: <Store strokeWidth={1} className="icon" />,
+    label: "Shop",
   },
 ];

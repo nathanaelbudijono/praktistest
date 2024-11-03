@@ -13,7 +13,7 @@ import { capitalizeFirstLetter, formatToIDR } from "@/lib/helper";
 import { bestSpendersProps, transactionProps } from "@/types/database-types";
 import { User } from "lucide-react";
 
-const TopSpenderCard = ({
+const TopSpenderDialog = ({
   item,
   index,
   totalTransaction,
@@ -70,4 +70,4 @@ const TopSpenderCard = ({
   );
 };
 
-export default TopSpenderCard;
+export default TopSpenderDialog;

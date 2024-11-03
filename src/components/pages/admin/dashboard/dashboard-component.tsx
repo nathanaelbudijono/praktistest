@@ -6,12 +6,15 @@ import {
   BestSellingItemCardNotFound,
 } from "@/components/modules/card/best-selling-card";
 import RevenueCard from "@/components/modules/card/revenue-card";
-import TopSpenderCard from "@/components/modules/card/top-spender-card";
 import RevenueChart from "@/components/modules/chart/revenue-chart";
+import TopSpenderDialog from "@/components/modules/dialog/top-spender-dialog";
+import SpenderDropDown from "@/components/modules/dropdown/spender-dropdown";
+import DashboardSkeleton from "@/components/modules/skeleton/dashboard-skeleton";
+import { spenderColumns } from "@/components/modules/table/spender-column";
+import SpenderTable from "@/components/modules/table/spender-table";
 import { transactionColumns } from "@/components/modules/table/transaction-column";
 import TransactionDataTable from "@/components/modules/table/transaction-table";
-import { Button } from "@/components/ui/button";
-
+import RefreshToolTip from "@/components/modules/tooltip/refresh-tooltip";
 import Typography from "@/components/ui/typography";
 import {
   handleFetchAllItems,
@@ -25,27 +28,7 @@ import {
   itemProps,
   transactionProps,
 } from "@/types/database-types";
-import {
-  ArrowLeftRight,
-  Coins,
-  RefreshCcw,
-  ShoppingBasket,
-  Wrench,
-} from "lucide-react";
-import DashboardSkeleton from "@/components/modules/skeleton/dashboard-skeleton";
-import RefreshToolTip from "@/components/modules/tooltip/refresh-tooltip";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import SpenderTable from "@/components/modules/table/spender-table";
-import { spenderColumns } from "@/components/modules/table/spender-column";
+import { ArrowLeftRight, Coins, ShoppingBasket } from "lucide-react";
 
 const DashboardComponent = () => {
   const {
@@ -167,7 +150,7 @@ const DashboardComponent = () => {
               </div>
             </section>
           </section>
-          <section className="mt-5 flex gap-7 h-full max-dashboard:flex-col">
+          <section className="mt-5 flex gap-7 max-dashboard:flex-col">
             <section className="w-1/2 max-dashboard:w-full">
               <Typography variant="label" className="mb-3">
                 Today Transactions
@@ -177,7 +160,7 @@ const DashboardComponent = () => {
                 data={buyerTransaction}
               />
             </section>
-            <section className="w-1/2  max-dashboard:w-full">
+            <section className="w-1/2 max-dashboard:w-full">
               <Spender
                 spenderView={spenderView}
                 setSpenderView={setSpenderView}
@@ -286,39 +269,28 @@ const Spender = ({
   totalTransaction: transactionProps[];
 }) => {
   return (
-    <section className="h-full">
+    <section>
       <div className="flex justify-between items-center">
         <Typography variant="label" className="mb-3">
-          Top Spenders
+          {spenderView === "card" ? "Top Spender" : "All Spender"}
         </Typography>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm">
-              <Wrench className="text-black/50" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>View</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuRadioGroup
-              value={spenderView}
-              onValueChange={setSpenderView}
-            >
-              <DropdownMenuRadioItem value="card">Cards</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="table">Table</DropdownMenuRadioItem>
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <SpenderDropDown
+          spenderView={spenderView}
+          setSpenderView={setSpenderView}
+        />
       </div>
-      <Typography variant="p" color="muted" className="mb-3">
-        Click to view more details
-      </Typography>
+      {spenderView === "card" && (
+        <Typography variant="p" color="muted" className="dashboard:mb-10">
+          Click to view more details
+        </Typography>
+      )}
+
       {spenderView === "card" ? (
         <div className="grid grid-cols-3 items-center max-dashboard:mt-5">
-          {bestSpender?.map((item, index) => {
+          {bestSpender?.slice(0, 3)?.map((item, index) => {
             return (
               <div key={index}>
-                <TopSpenderCard
+                <TopSpenderDialog
                   item={item}
                   index={index}
                   totalTransaction={totalTransaction}

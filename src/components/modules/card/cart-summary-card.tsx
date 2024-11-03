@@ -75,11 +75,13 @@ const CartSummaryCard = () => {
       {totalCart > 0 && (
         <div className="mt-5">
           <div className="grid grid-cols-4 text-center">
-            <Typography variant="p" className="border-t pt-2">
+            <Typography variant="p" className="border-t pt-2 text-nowrap">
               Grand Total
             </Typography>
             <p></p>
-            <Typography variant="p">{formatToIDR(grandTotal)}</Typography>
+            <Typography variant="p" className="border-t pt-2 text-nowrap">
+              {formatToIDR(grandTotal)}
+            </Typography>
             <p></p>
           </div>
 

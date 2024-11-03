@@ -1,18 +1,11 @@
 import * as React from "react";
 
 import ShopCard from "@/components/modules/card/shop-card";
+import FilterShopDropdown from "@/components/modules/dropdown/filter-shop-dropdown";
+import Footer from "@/components/modules/footer";
 import Header from "@/components/modules/header";
 import ShopSkeleton from "@/components/modules/skeleton/shop-skeleton";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import Layout from "@/components/ui/layout/layout";
 import Typography from "@/components/ui/typography";
@@ -22,8 +15,6 @@ import {
 } from "@/lib/fetcher/get-fetcher";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { itemProps } from "@/types/database-types";
-import { Filter } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const ShopComponent = () => {
   const [allItems, setAllItems] = React.useState<itemProps[] | null>(null);
@@ -82,7 +73,7 @@ const ShopComponent = () => {
   };
 
   const handleFilterBar = (filterType: string): void => {
-    let sortedItems = filteredItems;
+    const sortedItems = filteredItems;
     if (sortedItems === null) return;
     try {
       switch (filterType) {
@@ -131,7 +122,7 @@ const ShopComponent = () => {
   return (
     <Layout>
       <Header />
-      <section className="mt-5">
+      <main className="mt-5">
         <div>
           <Typography variant="h3">Today&apos;s Deal</Typography>
           <Typography variant="p" color="muted" className="mt-3">
@@ -158,32 +149,11 @@ const ShopComponent = () => {
                 );
               })}
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost">
-                <Filter strokeWidth={1} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Filter items</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                value={filter}
-                onValueChange={(value) => {
-                  setFilter(value);
-                  handleFilterBar(value);
-                }}
-              >
-                <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="cheap">
-                  Cheapest
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="expensive">
-                  Expensive
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <FilterShopDropdown
+            filter={filter}
+            setFilter={setFilter}
+            handleFilterBar={handleFilterBar}
+          />
         </div>
         <div className="mt-3">
           {allItems && (
@@ -206,7 +176,8 @@ const ShopComponent = () => {
             </Typography>
           )}
         </div>
-      </section>
+      </main>
+      <Footer />
     </Layout>
   );
 };

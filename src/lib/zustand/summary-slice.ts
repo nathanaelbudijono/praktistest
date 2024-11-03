@@ -157,9 +157,9 @@ export const summarySlices: StateCreator<
         .sort((a, b) => b.revenue - a.revenue);
 
       // get 3 best spender
-      const bestSpenders = Object.values(spenderTotal)
-        .sort((a, b) => b.spent - a.spent)
-        .slice(0, 3);
+      const bestSpenders = Object.values(spenderTotal).sort(
+        (a, b) => b.spent - a.spent
+      );
 
       set({
         transactionCount: transactionCount,

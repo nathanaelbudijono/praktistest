@@ -8,9 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BASE_URL } from "@/constant/env";
-import { CircleMinus, CircleUser, LogOut, ShoppingCart } from "lucide-react";
-import Link from "next/link";
 import {
   Sheet,
   SheetContent,
@@ -19,23 +16,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
+import { BASE_URL } from "@/constant/env";
+import { useCartStore } from "@/lib/zustand/store";
+import { CircleUser, LogOut, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../ui/button";
-import { useCartStore } from "@/lib/zustand/store";
-import Typography from "../ui/typography";
-import { capitalizeFirstLetter, formatToIDR } from "@/lib/helper";
 import CartSummaryCard from "./card/cart-summary-card";
 
 const Header = () => {
   const router = useRouter();
-  const { cart, totalCart, clearCart, removeCart } = useCartStore();
+  const { totalCart, clearCart } = useCartStore();
 
   const [nameStore, setNameStore] = React.useState<string | null>(null);
   const [typeStore, setTypeStore] = React.useState<string | null>(null);
@@ -50,8 +41,17 @@ const Header = () => {
   const handleLogOut = () => {
     try {
       localStorage.clear();
-      document.cookie = "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      clearCart();
+      setNameStore(null);
+      setTypeStore(null);
+      if (typeStore === "admin") {
+        document.cookie =
+          "permission=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      } else {
+        document.cookie =
+          "name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        clearCart();
+      }
+
       router.push(`${BASE_URL}`);
     } catch (err) {
       console.log(err);

@@ -53,7 +53,7 @@ const TransactionDataTable = <TData, TValue>({
     <section>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Buyers..."
+          placeholder="Find Buyers..."
           value={(table.getColumn("buyer")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("buyer")?.setFilterValue(event.target.value)

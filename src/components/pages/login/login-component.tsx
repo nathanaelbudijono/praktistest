@@ -18,8 +18,8 @@ const LoginComponent = () => {
               <ArrowLeft className="text-gray-500" />
             </Link>
             <Typography variant="p" className="font-semibold z-10">
-              "Embrace your style with Islander Shop—where fashion meets the
-              spirit of the sea!"
+              &quot;Embrace your style with Islander Shop—where fashion meets
+              the spirit of the sea!&ldquo;
             </Typography>
           </div>
           <Image

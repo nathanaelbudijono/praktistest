@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import ItemsCard from "@/components/modules/card/items-card";
+import ManageItemSkeleton from "@/components/modules/skeleton/manage-item-skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Typography from "@/components/ui/typography";
@@ -10,10 +11,9 @@ import {
 } from "@/lib/fetcher/get-fetcher";
 import { capitalizeFirstLetter } from "@/lib/helper";
 import { itemProps } from "@/types/database-types";
-import ManageItemSkeleton from "@/components/modules/skeleton/manage-item-skeleton";
 
 const ManageItemsComponent = () => {
-  const [category, setCategory] = React.useState<string[] | null>(null);
+  const [category, setCategory] = React.useState<string[]>([]);
   const [allItems, setAllItems] = React.useState<itemProps[] | null>(null);
   const [filteredItems, setFilteredItems] = React.useState<itemProps[] | null>(
     null
@@ -124,7 +124,7 @@ const ManageItemsComponent = () => {
               placeholder="Search items..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-52 mb-5"
+              className="w-52 mb-5 translate-y-2.5"
             />
           )}
 

@@ -53,10 +53,10 @@ const SpenderTable = <TData, TValue>({
     <section>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter Buyers..."
+          placeholder="Find Spenders..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("buyer")?.setFilterValue(event.target.value)
+            table.getColumn("name")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

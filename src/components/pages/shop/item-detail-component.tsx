@@ -16,6 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ItemDetailSkeleton from "@/components/modules/skeleton/item-detail-skeleton";
+import Footer from "@/components/modules/footer";
 
 const ItemDetailComponent = ({ item }: { item: string }) => {
   const [name, type, permission] = useCheckLogged();
@@ -145,22 +146,24 @@ const ItemDetailComponent = ({ item }: { item: string }) => {
                 </Typography>
               )}
             </div>
-
-            <div className="mt-5 flex items-center space-x-2 max-lg:justify-center max-lg:mb-10">
-              <Button
-                onClick={() => {
-                  handleAddtoCart(itemDetail);
-                }}
-              >
-                {cart.find((cartItem) => cartItem.item === item)
-                  ? "Update Cart"
-                  : "Add to Cart"}
-              </Button>
-              <Counter counter={counter} setCounter={setCounter} />
-            </div>
+            {permission !== "admin" && (
+              <div className="mt-5 flex items-center space-x-2 max-lg:justify-center max-lg:mb-10">
+                <Button
+                  onClick={() => {
+                    handleAddtoCart(itemDetail);
+                  }}
+                >
+                  {cart.find((cartItem) => cartItem.item === item)
+                    ? "Update Cart"
+                    : "Add to Cart"}
+                </Button>
+                <Counter counter={counter} setCounter={setCounter} />
+              </div>
+            )}
           </div>
         </section>
       </main>
+      <Footer />
     </Layout>
   ) : (
     <Layout>

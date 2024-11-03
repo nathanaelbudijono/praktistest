@@ -104,6 +104,18 @@
     {
       "name": "nathan",
       "type": "VIP"
+    },
+    {
+      "name": "budi",
+      "type": "VIP"
+    },
+    {
+      "name": "yoga",
+      "type": "wholesale"
+    },
+    {
+      "name": "ratata",
+      "type": "VIP"
     }
   ],
   "Transaction": [
@@ -151,6 +163,31 @@
       "item": "long pants",
       "qty": 2,
       "buyer": "nathan"
+    },
+    {
+      "item": "magic shirt",
+      "qty": 4,
+      "buyer": "budi"
+    },
+    {
+      "item": "shorts",
+      "qty": 4,
+      "buyer": "budi"
+    },
+    {
+      "item": "magic shirt",
+      "qty": 3,
+      "buyer": "yoga"
+    },
+    {
+      "item": "long pants",
+      "qty": 2,
+      "buyer": "yoga"
+    },
+    {
+      "item": "square hat",
+      "qty": 2,
+      "buyer": "ratata"
     }
   ]
 }

@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 
 import Image from "next/image";
+import ItemCardDialog from "../dialog/items-card-dialog";
 
 const ItemsCard = ({ item }: { item: itemProps }) => {
   const pricesLength: number = item.prices.length;
@@ -56,44 +57,11 @@ const ItemsCard = ({ item }: { item: itemProps }) => {
         )}
       </div>
       <div className="mt-3">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="w-full">See Details</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {capitalizeFirstLetter(item.name)} Details
-              </DialogTitle>
-              <DialogDescription>{item.description}</DialogDescription>
-              <div className="space-y-3">
-                {item.prices.map((price, index) => {
-                  const isSpecialPrice = item.prices.some(
-                    (item) =>
-                      item.priceFor === "VIP" || item.priceFor === "wholesale"
-                  );
-                  return isSpecialPrice ? (
-                    <div key={index} className="flex gap-1 items-center">
-                      <Typography variant="p">
-                        {capitalizeFirstLetter(price.priceFor)} Price
-                      </Typography>
-                      <Typography variant="p">
-                        {formatToIDR(price.price)}
-                      </Typography>
-                    </div>
-                  ) : (
-                    <div key={index} className="flex gap-1 items-center">
-                      <Typography variant="p">
-                        This item is being sold to all buyers with a price of{" "}
-                        {formatToIDR(price.price)}
-                      </Typography>
-                    </div>
-                  );
-                })}
-              </div>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
+        <ItemCardDialog
+          name={item.name}
+          description={item.description}
+          prices={item.prices}
+        />
       </div>
     </div>
   );

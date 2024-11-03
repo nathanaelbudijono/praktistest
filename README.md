@@ -19,3 +19,9 @@ This project utilizes the Next.js page router and is organized into seven main f
 - pages: The default Next.js folder that defines the application's routing structure, with each file corresponding to a route, contains API Route to simulate database fetching.
 
 - styles: The default Next.js folder for storing global CSS files and stylesheets.
+
+- middleware : This function checks if you are logged in as admin or not.
+
+## Project Feature
+
+The dashboard provides a clear overview of key business metrics, including total revenue, best-selling items, top categories, total transactions, and highest spenders. It also offers a simmulation to do a transaction as a user.

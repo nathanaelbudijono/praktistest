@@ -13,22 +13,11 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import useBarWidth from "@/hooks/useBarWidth";
 import { capitalizeFirstLetter } from "@/lib/helper";
-import { rpiProps, rpcProps } from "@/types/database-types";
+import { rpcProps, rpiProps } from "@/types/database-types";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { Button } from "@/components/ui/button";
-import { Wrench } from "lucide-react";
+import ChartDropDown from "../dropdown/chart-dropdown";
 
 const RevenueChart = ({ rpc, rpi }: { rpc: rpcProps[]; rpi: rpiProps[] }) => {
   const width = useBarWidth();
@@ -47,28 +36,10 @@ const RevenueChart = ({ rpc, rpi }: { rpc: rpcProps[]; rpi: rpiProps[] }) => {
           <CardTitle>
             Revenue Per {selectedCategory === "rpc" ? "Category" : "Item"}
           </CardTitle>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <Wrench className="text-black/50" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
-                value={selectedCategory}
-                onValueChange={setSelectedCategory}
-              >
-                <DropdownMenuRadioItem value="rpc">
-                  Revenue Per Category
-                </DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="rpi">
-                  Revenue Per Item
-                </DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ChartDropDown
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+          />
         </div>
         <CardDescription className="mt-1">This Month</CardDescription>
       </CardHeader>
