@@ -1,14 +1,6 @@
 import * as React from "react";
 
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Sheet,
   SheetContent,
   SheetDescription,
@@ -18,11 +10,13 @@ import {
 } from "@/components/ui/sheet";
 import { BASE_URL } from "@/constant/env";
 import { useCartStore } from "@/lib/zustand/store";
-import { CircleUser, LogOut, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../ui/button";
 import CartSummaryCard from "./card/cart-summary-card";
+import HeaderDropdown from "./dropdown/header-dropdown";
+import GamesDropdown from "./dropdown/games-dropdown";
 
 const Header = () => {
   const router = useRouter();
@@ -38,7 +32,7 @@ const Header = () => {
     setTypeStore(type);
   }, []);
 
-  const handleLogOut = () => {
+  const handleLogOut = (): void => {
     try {
       localStorage.clear();
       setNameStore(null);
@@ -66,48 +60,39 @@ const Header = () => {
       >
         The Islanders
       </Link>
-      {!nameStore ? (
-        <Button size="sm" onClick={() => router.push(`${BASE_URL}/login`)}>
-          Login
-        </Button>
-      ) : (
-        <div className="flex items-center gap-3">
-          <Sheet>
-            <SheetTrigger asChild>
-              <ShoppingCart strokeWidth={1} size={20} />
-            </SheetTrigger>
-            <SheetContent>
-              <SheetHeader>
-                <SheetTitle>Total Cart Items</SheetTitle>
-                <SheetDescription>
-                  {totalCart === 0
-                    ? "No items in cart, start shopping!"
-                    : `You have ${totalCart} items`}
-                </SheetDescription>
-              </SheetHeader>
-              <CartSummaryCard />
-            </SheetContent>
-          </Sheet>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button>
-                <CircleUser strokeWidth={1} className="h-4 w-4" />
-                <span className="sr-only">Toggle user menu</span>
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>
-                {nameStore}, {typeStore}
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogOut}>
-                <LogOut strokeWidth={1} size={16} className="mr-1" /> Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )}
+      <div className="flex gap-4 items-center">
+        <GamesDropdown />
+        {!nameStore ? (
+          <Button size="sm" onClick={() => router.push(`${BASE_URL}/login`)}>
+            Login
+          </Button>
+        ) : (
+          <div className="flex items-center gap-4">
+            <Sheet>
+              <SheetTrigger asChild>
+                <ShoppingCart strokeWidth={1} size={20} />
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Total Cart Items</SheetTitle>
+                  <SheetDescription>
+                    {totalCart === 0
+                      ? "No items in cart, start shopping!"
+                      : `You have ${totalCart} items`}
+                  </SheetDescription>
+                </SheetHeader>
+                <CartSummaryCard />
+              </SheetContent>
+            </Sheet>
+            <HeaderDropdown
+              nameStore={nameStore}
+              typeStore={typeStore}
+              handleLogOut={handleLogOut}
+            />
+          </div>
+        )}
+      </div>
     </main>
   );
 };

@@ -14,7 +14,7 @@ const LoginComponent = () => {
       <main className="mt-5 h-screen flex">
         <section className="relative w-1/2 bg-muted max-lg:hidden">
           <div className="flex flex-col px-6 pt-4 pb-20 items-start justify-between h-full ">
-            <Link href={`${BASE_URL}`}>
+            <Link href={`${BASE_URL}`} className="z-10">
               <ArrowLeft className="text-gray-500" />
             </Link>
             <Typography variant="p" className="font-semibold z-10">

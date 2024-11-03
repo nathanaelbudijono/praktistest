@@ -1,34 +1,20 @@
 "use client";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { BASE_URL } from "@/constant/env";
 import { navItemProps } from "@/types/types";
-import {
-  CircleUser,
-  LayoutDashboard,
-  LogOut,
-  Menu,
-  PackageOpen,
-  Store,
-} from "lucide-react";
+import { LayoutDashboard, Menu, PackageOpen, Store } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/router";
 import Typography from "../ui/typography";
+import AdminHeaderDropdown from "./dropdown/admin-header-dropdown";
 
 const AdminHeader = ({ title }: { title: string }) => {
   const path = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogOut = (): void => {
     try {
       localStorage.clear();
       document.cookie =
@@ -75,22 +61,7 @@ const AdminHeader = ({ title }: { title: string }) => {
         </Typography>
       </div>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button>
-            <CircleUser strokeWidth={1} className="h-4 w-4" />
-            <span className="sr-only">Toggle user menu</span>
-          </button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Admin</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOut strokeWidth={1} size={16} className="mr-1" /> Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <AdminHeaderDropdown handleLogOut={handleLogOut} />
     </header>
   );
 };
